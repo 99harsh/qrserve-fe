@@ -4,32 +4,42 @@ import "./Style.scss";
 import axios from "axios";
 import { Settings } from "../../Settings";
 import Loading from "../Loading/Loading";
+import { useLocation } from 'react-router-dom';
 
 
-const MainPage = () => {
+const MainPage = (props: any, route: any) => {
 
     const [loading, setLoading] = useState(true);
     const [restaurant, setRestaurant] = useState<any>({});
+    const [restaurantId, setRestaurantId] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
 
     useEffect(() => {
-        init();
+
+        const id = queryParams.get('id');
+        if (id) {
+            setRestaurantId(id);
+            init(id);
+        } else {
+            alert("ID IS MISSING!")
+        }
     }, [])
 
-    const init = async () => {
+    const init = async (id:string) => {
         try {
-            const { data } = await axios.get(`${Settings.SERVERURL}restaurant/hotspotcafe`);
-            console.log(data);
+            const { data } = await axios.get(`${Settings.SERVERURL}restaurant/${id}`);
             setRestaurant(data);
             setLoading(false);
-            
+
         } catch (error) {
             alert("Something Went Wrong!")
         }
     }
 
     const navigationHandler = () => {
-        navigate('/menu-details');
+        navigate(`/menu-details?id=${restaurantId}`);
     }
 
 
@@ -57,9 +67,9 @@ const MainPage = () => {
                         </div>
                         <div className="menu-ui-button-container">
                             <button className="menu-ui-button"
-                            onClick={() => {
-                                navigationHandler()
-                            }}>Explore Menu
+                                onClick={() => {
+                                    navigationHandler()
+                                }}>Explore Menu
                                 <svg fill="#fff" height="15px" width="15px" version="1.1" id="Layer_1"
                                     viewBox="0 0 330 330">
                                     <path id="XMLID_222_" d="M250.606,154.389l-150-149.996c-5.857-5.858-15.355-5.858-21.213,0.001

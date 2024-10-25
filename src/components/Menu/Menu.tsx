@@ -8,6 +8,8 @@ import axios from "axios";
 import { Settings } from "../../Settings";
 import Loading from "../Loading/Loading";
 
+import { useLocation } from 'react-router-dom';
+
 const Menu = () => {
     const leftDivRef = useRef<HTMLDivElement>(null);
     const rightDivRef = useRef<HTMLDivElement>(null);
@@ -15,15 +17,22 @@ const Menu = () => {
     const [activeSection, setActiveSection] = useState<string>("");
     const [menu, setMenu] = useState<any[]>([]);
     const [isClient, setIsClient] = useState(false);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
 
     useEffect(() => {
-        setIsClient(true);
-        initMenu();
+        const id = queryParams.get('id');
+        if(id){
+            setIsClient(true);
+            initMenu(id);
+        }else{
+            alert("ID IS MISSING!")
+        }
     }, []);
 
-    const initMenu = async () => {
+    const initMenu = async (id:string) => {
         try {
-            const { data } = await axios.get(`${Settings.SERVERURL}restaurant/menu/mudoven`);
+            const { data } = await axios.get(`${Settings.SERVERURL}restaurant/menu/${id}`);
             setMenu(data);
             if (data.length) {
                 setActiveSection(data[0].name);
