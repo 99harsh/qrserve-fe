@@ -1,0 +1,17 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins.scss';
+
+
+.menu-ui-item{
+    @include flex-center(space-between);
+    span{
+        font-size:1.5rem;
+        margin-bottom: 1rem;
+        font-family: $font-medium;
+    }
+
+    .menu-ui-item-name{
+        width: 80%;
+        word-break: break-all;
+    }
+}
