@@ -1,8 +1,8 @@
 import './App.scss';
 import Menu from './components/Menu/Menu';
 import MainPage from './components/MainPage/MainPage';
-import BackdropImage from './assets/images/main-backdrop.png';
-import { Router, Routes, Route, BrowserRouter } from 'react-router-dom';
+import BackdropImage from './assets/images/main-backdrop.webp';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
