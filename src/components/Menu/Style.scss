@@ -129,13 +129,9 @@ footer{
     left: 0;
     text-align: center;
     font-size: 1.5rem;
-    @include flex-center(space-between);
-
-    .menu-ui-contact{
-        @include flex-center();
-        a{
-            margin-left: 5px;
-            color: $white;
-        }
+    text-align: center;
+    a{
+        color: $white;
+        margin-left: .5rem;
     }
 }

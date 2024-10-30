@@ -8,9 +8,9 @@ export default function ItemDetails({ item }: any) {
                 <span>{item.price}₹</span>
             </div>
             {
-                item.description || item.name === 'White Sauce Pasta' ?
+                item.description ?
                     <div className='menu-ui-item-description'>
-                        <span>I am description hello worldI am description hello worldI am description hello worldI am description hello world</span>
+                        <span>{item.description}</span>
                     </div> : ""
             }
         </div>

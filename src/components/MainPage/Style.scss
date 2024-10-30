@@ -120,15 +120,20 @@
   .menu-footer-container{
     position: fixed;
     bottom: 0;
-    background-color: #ffb422;
+    background-color: #000;
     width: 100%;
     padding: 1rem;
     display: flex;
+    color: $white;
     justify-content: center;
-    span{
+
       font-family: $font-bold;
       font-size: 1.2rem;
-    }
+      a{
+        color: $white !important;
+        margin-left: 0.5rem;
+      }
+    
   }
   
 }

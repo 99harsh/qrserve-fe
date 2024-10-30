@@ -1,63 +1,43 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Style.scss";
-import axios from "axios";
-import { Settings } from "../../Settings";
-import Loading from "../Loading/Loading";
 import { useLocation } from "react-router-dom";
 
-const MainPage = (props: any, route: any) => {
-  const [loading, setLoading] = useState(true);
-  const [restaurant, setRestaurant] = useState<any>({});
-  const [restaurantId, setRestaurantId] = useState("");
+const MainPage = (props: any) => {
+  const [restaurantDetails, setRestaurantDetails] = useState<any>(() => {
+    const details = localStorage.getItem("restaurantDetails");
+    return details ? JSON.parse(details) : null;
+  });
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
   useEffect(() => {
-    const id = queryParams.get("id");
-    if (id) {
-      setRestaurantId(id);
-      init(id);
-    } else {
-      alert("ID IS MISSING!");
-    }
+    
   }, []);
 
-  const init = async (id: string) => {
-    try {
-      const { data } = await axios.get(`${Settings.SERVERURL}restaurant/${id}`);
-      setRestaurant(data);
-      localStorage.setItem("restaurantName", data.name);
-      setLoading(false);
-    } catch (error) {
-      alert("Something Went Wrong!");
-    }
-  };
+
 
   const navigationHandler = () => {
-    navigate(`/menu-details?id=${restaurantId}`);
+    navigate(`/menu-details?id=${restaurantDetails.id}`);
   };
 
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <div className="menu-mainpage-container">
       <div className="menu-heading-wrapper">
         <div className="menu-content-container">
           <div className="menu-heading-container">
             <div>
-              <span className="menu-heading">{restaurant.name}</span>
+              <span className="menu-heading">{restaurantDetails.name}</span>
             </div>
             <div>
-              <span className="menu-address">{restaurant.address}</span>
+              <span className="menu-address">{restaurantDetails.address}</span>
             </div>
             <div>
               <span className="menu-by">MENU BY</span>
             </div>
             <div>
-              <span className="menu-ui">U4R.in</span>
+              <span className="menu-ui">QRServe.in</span>
             </div>
             <div className="menu-ui-button-container">
               <button
@@ -89,7 +69,7 @@ const MainPage = (props: any, route: any) => {
         </div>
       </div>
       <div className="menu-footer-container">
-        <span>+91 7987343242 | +91 9685172952 | U4R.in</span>
+        <a href="https://qrserve.in">QRServe.in</a>
       </div>
     </div>
   );
