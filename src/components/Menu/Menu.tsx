@@ -156,9 +156,12 @@ const restaurantDetails =
               className="section"
               data-title={element.name}
             >
-              <div className="category-image-container">
-                <img src={PizzaImage} alt="category-image" />
-              </div>
+              {
+                element.image_url != "" ? 
+                <div className="category-image-container">
+                <img src={element.image_url} alt="category-image" />
+              </div>:""
+              }
               <h2>{element.name}</h2>
 
               {element?.items?.length > 0 && (
